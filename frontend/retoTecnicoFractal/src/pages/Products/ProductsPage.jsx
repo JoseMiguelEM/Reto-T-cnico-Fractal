@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { products } from '../../data/products.js';
 import ProductsTable from './components/ProductsTable.jsx';
 import PopupAddProduct from './components/PopupAddProduct.jsx';
-
+import {useProducts} from '../../hooks/useProducts.js';
 export default function ProductsPage() {
+    const { products } = useProducts();
     const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
     const cantidadProductos = products.length;
-
+    console.log(products);
     const handleAddClick = () => {
         setIsAddPopupOpen(true);
     };

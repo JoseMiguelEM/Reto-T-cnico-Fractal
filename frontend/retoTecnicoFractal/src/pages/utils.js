@@ -1,6 +1,6 @@
 const tableStyles = {
     table: "min-w-full border-separate",
-    th: "px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b-2 border-black",
+    th: "px-6 pb-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b-2 border-black",
     tbody: "bg-gray-50",
     tr: "bg-[#B6BFC9]/50 rounded-lg",
     td: "px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center",

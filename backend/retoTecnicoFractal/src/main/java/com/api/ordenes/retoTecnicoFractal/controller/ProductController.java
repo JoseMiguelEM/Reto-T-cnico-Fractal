@@ -40,9 +40,7 @@ public class ProductController {
         if (product.isPresent()) {
             Product updatedProduct = product.get();
             updatedProduct.setName(productDetails.getName());
-            updatedProduct.setDescription(productDetails.getDescription());
-            updatedProduct.setPrice(productDetails.getPrice());
-            updatedProduct.setImage(productDetails.getImage());
+            updatedProduct.setUnitPrice(productDetails.getUnitPrice());
             return ResponseEntity.ok(productService.save(updatedProduct));
         } else {
             return ResponseEntity.notFound().build();

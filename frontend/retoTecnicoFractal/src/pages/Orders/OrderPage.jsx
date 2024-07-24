@@ -1,9 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import OrdersTable from './components/OrdersTable';
-import { orders } from '../../data/orders.js';
+import { useOrders } from '../../hooks/useOrders.js';
 
 export default function OrdersPage() {
+    const { orders } = useOrders();
     const cantidadOrders = orders.length;
+    const navigate = useNavigate(); // Hook para navegar
+    console.log(orders);
+    const handleNewOrderClick = () => {
+        navigate('/add-order');
+    };
 
     return (
         <div className='px-8 py-4'>
@@ -14,6 +21,7 @@ export default function OrdersPage() {
                 </div>
                 <div
                     className="text-white text-xl text-center rounded-lg cursor-pointer bg-[#1585D7] px-4 py-2"
+                    onClick={handleNewOrderClick} // Añadir evento de click
                 >
                     + New Order
                 </div>

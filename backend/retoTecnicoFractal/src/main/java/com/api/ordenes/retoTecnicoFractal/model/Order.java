@@ -1,5 +1,6 @@
 package com.api.ordenes.retoTecnicoFractal.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "orders") // Cambiar el nombre de la tabla para evitar conflictos con palabras reservadas
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,18 +22,9 @@ public class Order {
     private String status;
     private String date;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Set<OrderProduct> orderProducts = new HashSet<>();
 
     private double total;
-
-    // Métodos adicionales para agregar y remover productos
-    public void addProduct(Product product) {
-        OrderProduct orderProduct = new OrderProduct(this, product);
-        orderProducts.add(orderProduct);
-    }
-
-    public void removeProduct(Product product) {
-        orderProducts.removeIf(op -> op.getProduct().equals(product) && op.getOrder().equals(this));
-    }
 }

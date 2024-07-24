@@ -20,7 +20,7 @@ public class OrderController {
 
     @GetMapping
     public List<Order> getAllOrders() {
-        return orderService.findAll();
+        return orderService.getAllOrders();
     }
 
     @GetMapping("/{id}")

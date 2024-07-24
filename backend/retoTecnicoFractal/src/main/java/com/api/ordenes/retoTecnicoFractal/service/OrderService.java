@@ -14,6 +14,12 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    public List<Order> getAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+        orders.forEach(order -> order.getOrderProducts().size()); // Trigger loading of products
+        return orders;
+    }
+
     public List<Order> findAll() {
         return orderRepository.findAll();
     }

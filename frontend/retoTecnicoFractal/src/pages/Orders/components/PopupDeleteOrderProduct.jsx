@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { FaTimes, FaTrash, FaCheck } from 'react-icons/fa';
 
-export default function PopupDeleteOrder({ order, onClose }) {
+export default function PopupDeleteOrderProduct({ product, onDelete, onClose }) {
     const [isDeleted, setIsDeleted] = useState(false);
 
     const handleDelete = () => {
-        // Lógica para eliminar la orden
+        onDelete(product.id);
         setIsDeleted(true);
     };
 
@@ -15,8 +15,10 @@ export default function PopupDeleteOrder({ order, onClose }) {
                 {!isDeleted ? (
                     <>
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-bold">Are you sure you want to delete order #{order.ID}?</h2>
-                            <button onClick={onClose}>&times;</button>
+                            <h2 className="text-xl font-bold">Are you sure you want to delete the product #{product.id}?</h2>
+                            <button onClick={onClose}>
+                                <FaTimes />
+                            </button>
                         </div>
                         <p className="mb-4">
                             This is a permanent action and you wouldn't be able to go back later.
@@ -39,11 +41,13 @@ export default function PopupDeleteOrder({ order, onClose }) {
                 ) : (
                     <>
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-bold">Order #{order.id} Deleted Successfully</h2>
-                            <button onClick={onClose}>&times;</button>
+                            <h2 className="text-xl font-bold">Product #{product.id} Deleted Successfully</h2>
+                            <button onClick={onClose}>
+                                <FaTimes />
+                            </button>
                         </div>
                         <div className="flex justify-center">
-                            <FaCheck className="text-black-500 text-4xl" />
+                            <FaCheck className="text-green-500 text-4xl" />
                         </div>
                         <div className="flex justify-center mt-4">
                             <button

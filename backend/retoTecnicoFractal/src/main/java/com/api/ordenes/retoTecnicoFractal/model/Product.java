@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
 @Getter
@@ -17,18 +16,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String description;
-    private Double price;
-    private String image;
+    private Double unitPrice;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<OrderProduct> orderProducts = new HashSet<>();
 
-    public Product(String name, String description, Double price, String image) {
+    public Product(String name, Double unitPrice) {
         this.name = name;
-        this.description = description;
-        this.price = price;
-        this.image = image;
+        this.unitPrice = unitPrice;
     }
 
     @Override
@@ -36,9 +29,7 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", image='" + image + '\'' +
+                ", unitPrice=" + unitPrice +
                 '}';
     }
 }

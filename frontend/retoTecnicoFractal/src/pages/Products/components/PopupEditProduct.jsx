@@ -3,7 +3,7 @@ import { FaTimes, FaSave, FaCheck } from 'react-icons/fa';
 
 export default function PopupEditProduct({ product, onClose }) {
     const [name, setName] = useState(product.name);
-    const [unitPrice, setUnitPrice] = useState(product.unitPrice);
+    const [unitPrice, setUnitPrice] = useState(product.price);
     const [isEdited, setIsEdited] = useState(false);
 
     const handleSave = () => {

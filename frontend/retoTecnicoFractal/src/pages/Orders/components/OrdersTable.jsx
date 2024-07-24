@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import PopupDeleteOrder from './PopupDeleteOrder'; // Asegúrate de que la ruta sea correcta
 import { tableStyles, getStatusClass, statusStyles, ordersCols } from '../../utils'; // Importar los estilos y columnas
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 
 export default function OrdersTable({ orders }) {
     const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const navigate = useNavigate(); // Hook para navegar
 
     const handleDeleteClick = (order) => {
         setSelectedOrder(order);
@@ -15,6 +17,10 @@ export default function OrdersTable({ orders }) {
     const handleClosePopup = () => {
         setIsDeletePopupOpen(false);
         setSelectedOrder(null);
+    };
+
+    const handleEditClick = (orderId) => {
+        navigate(`/add-order/${orderId}`);
     };
 
     return (
@@ -31,23 +37,29 @@ export default function OrdersTable({ orders }) {
                 </thead>
                 <tbody className={tableStyles.tbody}>
                     {orders.map(order => (
-                        <tr key={order.ID} className={tableStyles.tr}>
-                            <td className={`${tableStyles.tdLeft} ${tableStyles.iconCell}`}>{order.ID}</td>
-                            <td className={tableStyles.td}>{order.OrderNumber}</td>
-                            <td className={tableStyles.td}>{order.Date}</td>
-                            <td className={tableStyles.td}>{order.NumberOfProducts}</td>
-                            <td className={tableStyles.td}>{order.FinalPrice}</td>
+                        <tr key={order.id} className={tableStyles.tr}>
+                            <td className={`${tableStyles.tdLeft} ${tableStyles.iconCell}`}>{order.id}</td>
+                            <td className={tableStyles.td}>{order.number}</td>
+                            <td className={tableStyles.td}>{order.date}</td>
+                            <td className={tableStyles.td}>{order.orderProducts.length}</td>
+                            <td className={tableStyles.td}>{order.total}</td>
                             <td className={tableStyles.td}>
-                                <span className={`${getStatusClass(order.Status)} ${statusStyles.base} ${statusStyles.rounded} ${statusStyles.sizeLimit}`}>
-                                    {order.Status}
+                                <span className={`${getStatusClass(order.status)} ${statusStyles.base} ${statusStyles.rounded} ${statusStyles.sizeLimit}`}>
+                                    {order.status}
                                 </span>
                             </td>
                             <td className={`${tableStyles.tdRight} ${tableStyles.iconCell}`}>
                                 <div className={tableStyles.tdOptions} style={{ justifyContent: 'flex-end' }}>
-                                    {order.Status !== 'Completed' && (
-                                        <FaEdit className="text-black cursor-pointer" />
+                                    {order.status !== 'Completed' && (
+                                        <FaEdit
+                                            className="text-black cursor-pointer"
+                                            onClick={() => handleEditClick(order.id)}
+                                        />
                                     )}
-                                    <FaTrash className="text-black cursor-pointer" onClick={() => handleDeleteClick(order)} />
+                                    <FaTrash
+                                        className="text-black cursor-pointer"
+                                        onClick={() => handleDeleteClick(order)}
+                                    />
                                 </div>
                             </td>
                         </tr>
