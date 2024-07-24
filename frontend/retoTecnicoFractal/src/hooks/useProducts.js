@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const useProducts = () => {
+export const useProducts = (reload) => {
     const [products, setProducts] = useState([]);
 
-    const fetchOrders = async () => {
+    const fetchProducts = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/products');
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}products`);
+            console.log('response', response);
             setProducts(response.data);
         } catch (error) {
             console.error('Error fetching orders:', error);
@@ -14,8 +15,9 @@ export const useProducts = () => {
     };
 
     useEffect(() => {
-        fetchOrders();
-    }, []);
+        console.log('fetching products');
+        fetchProducts();
+    }, [reload]);
 
-    return { products };
+    return { products, setProducts };
 }

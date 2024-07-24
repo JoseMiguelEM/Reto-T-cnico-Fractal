@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { FaTimes, FaTrash, FaCheck } from 'react-icons/fa';
+import { deleteOrder } from '../../../utils/orderFunctions'; // Importar la función deleteOrder
 
 export default function PopupDeleteOrder({ order, onClose }) {
     const [isDeleted, setIsDeleted] = useState(false);
 
     const handleDelete = () => {
         // Lógica para eliminar la orden
+        console.log('Deleting order', order);
+        deleteOrder(order.id);
         setIsDeleted(true);
     };
 

@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { FaTimes, FaSave, FaCheck } from 'react-icons/fa';
+import { updateProduct } from '../../../utils/productsFunctions';
 
-export default function PopupEditProduct({ product, onClose }) {
+export default function PopupEditProduct({ product, onClose, setReload, reload }) {
     const [name, setName] = useState(product.name);
-    const [unitPrice, setUnitPrice] = useState(product.price);
+    const [unitPrice, setUnitPrice] = useState(product.unitPrice);
     const [isEdited, setIsEdited] = useState(false);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         // Lógica para editar el producto
+        const resp= await updateProduct(product.id,{name,unitPrice});
         setIsEdited(true);
+        setReload(!reload);
     };
 
     const isSaveDisabled = name.trim().length === 0 || unitPrice <= 0;
@@ -37,7 +40,8 @@ export default function PopupEditProduct({ product, onClose }) {
                                 type="number"
                                 className="mt-1 p-2 border w-full"
                                 value={unitPrice}
-                                onChange={(e) => setUnitPrice(e.target.value)}
+                                min="1"
+                                onChange={(e) => setUnitPrice(Math.max(1, parseFloat(e.target.value)))}
                             />
                         </div>
                         <div className="flex justify-between">

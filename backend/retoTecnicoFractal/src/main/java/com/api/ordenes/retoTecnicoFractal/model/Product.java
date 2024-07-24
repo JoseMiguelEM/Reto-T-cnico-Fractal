@@ -17,11 +17,13 @@ public class Product {
     private Long id;
     private String name;
     private Double unitPrice;
+    private Boolean active;
 
 
     public Product(String name, Double unitPrice) {
         this.name = name;
         this.unitPrice = unitPrice;
+        this.active = true;
     }
 
     @Override

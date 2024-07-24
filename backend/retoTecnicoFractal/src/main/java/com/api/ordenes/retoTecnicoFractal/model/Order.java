@@ -21,6 +21,7 @@ public class Order {
     private String number;
     private String status;
     private String date;
+    private Boolean active;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference

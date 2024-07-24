@@ -16,7 +16,7 @@ const getStatusClass = (status) => {
             return 'bg-[#D4BC41] text-white';
         case 'Completed':
             return 'bg-[#2A7C76] text-white';
-        case 'In Progress':
+        case 'In progress':
             return 'bg-[#CACFD6] text-black';
         default:
             return '';

@@ -2,24 +2,47 @@ import React, { useState } from 'react';
 import { FaSave } from 'react-icons/fa';
 import AddProduct from './AddProduct';
 import { useNavigate } from 'react-router-dom';
+import { createOrder, updateOrder } from '../../../utils/orderFunctions'; // Asegúrate de importar tu función
 
 export default function OrderResume({ order, setOrder, isEdit = false }) {
     const [showAddProduct, setShowAddProduct] = useState(false);
     const navigate = useNavigate();
-
-    const getCurrentDate = () => {
-        const today = new Date();
-        const month = String(today.getMonth() + 1).padStart(2, '0'); // Añade un 0 al inicio si el mes es menor a 10
-        const day = String(today.getDate()).padStart(2, '0'); // Añade un 0 al inicio si el día es menor a 10
-        const year = today.getFullYear();
-        return `${month}/${day}/${year}`;
-    };
+    const [popupSuccess, setPopupSuccess] = useState(false);
 
     const summaryFields = [
-        { label: "Date", value: getCurrentDate(), id: "date" },
+        { label: "Date", value: order.date, id: "date" },
         { label: "# Products", value: order.orderProducts.reduce((acc, product) => acc + product.quantity, 0), id: "products" },
         { label: "Final Price ($)", value: order.total.toFixed(2), id: "finalPrice" }
     ];
+
+    const handleSave = async () => {
+        console.log("Order: ", order);
+        console.log("isEdit: ", isEdit);
+        if(!isEdit){
+            const savedOrder = await createOrder(order);
+            if (savedOrder) {
+                setPopupSuccess(true);
+                setTimeout(() => {
+                    setPopupSuccess(false);
+                    navigate('/my-orders');
+                }, 2000);
+            } else {
+                alert('Error saving order');
+            }
+        }else {
+            console.log("Vamos a editar")
+            const savedOrder = await updateOrder(order.id , order);
+            if (savedOrder) {
+                setPopupSuccess(true);
+                setTimeout(() => {
+                    setPopupSuccess(false);
+                    navigate('/my-orders');
+                }, 2000);
+            } else {
+                alert('Error saving order');
+            }
+        }
+    };
 
     const handleOrderNumberChange = (e) => {
         const value = e.target.value;
@@ -33,7 +56,8 @@ export default function OrderResume({ order, setOrder, isEdit = false }) {
     };
 
     const handleAddProduct = (product) => {
-        const newOrderProducts = [...order.orderProducts, { id: product.id, price: product.unitPrice * product.quantity, quantity: product.quantity, product }];
+        const {quantity, ...rest} = product;
+        const newOrderProducts = [...order.orderProducts, { id: product.id, price: product.unitPrice * product.quantity, quantity: product.quantity, product: rest }];
         const newTotal = newOrderProducts.reduce((acc, p) => acc + p.price, 0);
         setOrder({ ...order, orderProducts: newOrderProducts, total: newTotal });
     };
@@ -110,6 +134,7 @@ export default function OrderResume({ order, setOrder, isEdit = false }) {
                     </button>
                     <button
                         type="button"
+                        onClick={handleSave}
                         className={`bg-[#1585D7] text-white py-2 px-4 rounded-lg flex items-center focus:outline-none ${isSaveDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                         disabled={isSaveDisabled}
                     >
@@ -122,6 +147,13 @@ export default function OrderResume({ order, setOrder, isEdit = false }) {
                     onAdd={handleAddProduct}
                     onClose={() => setShowAddProduct(false)}
                 />
+            )}
+            {popupSuccess && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center">
+                        <h2 className="text-xl font-bold mb-4">Order saved successfully!</h2>
+                    </div>
+                </div>
             )}
         </div>
     );

@@ -31,8 +31,9 @@ export default function PopupEditOrderProduct({ product, onSave, onClose }) {
                     <label className="block text-gray-700">Quantity</label>
                     <input
                         type="number"
+                        min="1"
                         value={quantity}
-                        onChange={(e) => setQuantity(parseInt(e.target.value))}
+                        onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value)))}
                         className="appearance-none border border-gray-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gray-500"
                     />
                 </div>

@@ -15,7 +15,8 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public List<Product> findAll() {
-        return productRepository.findAll();
+        //show only active products
+        return productRepository.findAllByActiveTrue();
     }
 
     public Optional<Product> findById(Long id) {
@@ -27,6 +28,12 @@ public class ProductService {
     }
 
     public void deleteById(Long id) {
-        productRepository.deleteById(id);
+        //Logical delete
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isPresent()) {
+            Product productToDelete = product.get();
+            productToDelete.setActive(false);
+            productRepository.save(productToDelete);
+        }
     }
 }

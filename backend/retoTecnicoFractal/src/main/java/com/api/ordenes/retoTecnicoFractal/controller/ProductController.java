@@ -50,6 +50,7 @@ public class ProductController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        System.out.println("id: " + id);
         productService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

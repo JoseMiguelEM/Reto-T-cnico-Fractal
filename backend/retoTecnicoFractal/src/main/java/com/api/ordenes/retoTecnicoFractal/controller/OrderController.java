@@ -37,14 +37,20 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order orderDetails) {
+        System.out.println("Estamos en updateOrder");
+        // System.out.println("=============================");
+        // System.out.println("=============================");
+        // System.out.println("=============================");
         Optional<Order> order = orderService.findById(id);
+        System.out.println("orderDetails: " + order);
         if (order.isPresent()) {
+            // System.out.println("Se ingresó al if");
             Order updatedOrder = order.get();
             updatedOrder.setNumber(orderDetails.getNumber());
             updatedOrder.setStatus(orderDetails.getStatus());
             updatedOrder.setDate(orderDetails.getDate());
             updatedOrder.setTotal(orderDetails.getTotal());
-            return ResponseEntity.ok(orderService.save(updatedOrder));
+            return ResponseEntity.ok(orderService.update(updatedOrder));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -53,6 +59,7 @@ public class OrderController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+        System.out.println("Se ingreso para eliminar una orden");
         orderService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

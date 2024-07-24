@@ -27,4 +27,11 @@ public class OrderProduct {
 
     private int quantity;
     private double price;
+
+    public OrderProduct(Order order, Product product, int quantity, double price) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+    }
 }

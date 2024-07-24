@@ -17,6 +17,7 @@ export default function OrdersTable({ orders }) {
     const handleClosePopup = () => {
         setIsDeletePopupOpen(false);
         setSelectedOrder(null);
+        location.reload();
     };
 
     const handleEditClick = (orderId) => {

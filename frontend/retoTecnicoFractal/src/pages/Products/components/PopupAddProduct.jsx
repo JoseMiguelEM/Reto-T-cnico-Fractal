@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import { FaTimes, FaSave, FaCopy } from 'react-icons/fa';
+import { createProduct } from '../../../utils/productsFunctions';
 
-export default function PopupAddProduct({ onClose }) {
+export default function PopupAddProduct({ onClose, products, setProducts }) {
     const [name, setName] = useState('');
     const [unitPrice, setUnitPrice] = useState('');
     const [isAdded, setIsAdded] = useState(false);
     const [productId, setProductId] = useState('');
 
-    const handleSave = () => {
+    const handleSave = async () => {
         // Lógica para guardar el producto
-        setProductId('21'); // Simular ID asignado
+        const product = {
+            name: name,
+            unitPrice: parseFloat(unitPrice), // Convertir unitPrice a número
+            active: true
+        };
+        const resp = await createProduct(product);
+        product.id = resp.id;
+        setProductId(product.id); // Simular ID asignado
+        setProducts([...products, product]);
+        console.log('Product added:', products);
         setIsAdded(true);
     };
 
@@ -39,12 +49,13 @@ export default function PopupAddProduct({ onClose }) {
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-gray-700">Unit Price ($$)</label>
+                            <label className="block text-gray-700">Unit Price ($)</label>
                             <input
                                 type="number"
+                                min="1"
                                 className="mt-1 p-2 border w-full"
                                 value={unitPrice}
-                                onChange={(e) => setUnitPrice(e.target.value)}
+                                onChange={(e) => setUnitPrice(Math.max(1, parseFloat(e.target.value)))}
                             />
                         </div>
                         <div className="flex justify-between">

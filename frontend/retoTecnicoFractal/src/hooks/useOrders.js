@@ -6,8 +6,9 @@ export const useOrders = () => {
 
     const fetchOrders = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/orders');
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}orders`);
             setOrders(response.data);
+            console.log("response",response.data);
         } catch (error) {
             console.error('Error fetching orders:', error);
         }

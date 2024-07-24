@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
-import ProductsTable from './components/ProductsTable.jsx';
-import PopupAddProduct from './components/PopupAddProduct.jsx';
-import {useProducts} from '../../hooks/useProducts.js';
+import React, { useState, useEffect } from 'react';
+import ProductsTable from './components/ProductsTable';
+import PopupAddProduct from './components/PopupAddProduct';
+
+import { useProducts } from '../../hooks/useProducts.js';
+
 export default function ProductsPage() {
-    const { products } = useProducts();
+    const [reload, setReload] = useState(false);
+    const { products, setProducts } = useProducts(reload); // Asegúrate de que fetchProducts esté disponible en tu hook
+    //const [prds, setProducts] = useState([]);
     const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
     const cantidadProductos = products.length;
-    console.log(products);
+
+    //useEffect(() => {
+    //    setProducts(products);
+    //}, [products, reload]);
+
+
     const handleAddClick = () => {
         setIsAddPopupOpen(true);
     };
@@ -29,8 +38,8 @@ export default function ProductsPage() {
                     + New Product
                 </div>
             </div>
-            <ProductsTable products={products} />
-            {isAddPopupOpen && <PopupAddProduct onClose={handleClosePopup} />}
+            <ProductsTable products={products} setProducts={setProducts} setReload={setReload} reload={reload} />
+            {isAddPopupOpen && <PopupAddProduct onClose={handleClosePopup} products={products} setProducts={setProducts} />}
         </div>
     );
 }

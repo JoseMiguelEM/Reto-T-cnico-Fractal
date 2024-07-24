@@ -3,14 +3,20 @@ import OrderProductsTable from './components/OrderProductsTable';
 import OrderResume from './components/OrderResume';
 
 function AddOrder() {
+    const formatDate = (date) => {
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Mes en formato de dos dígitos
+        const day = String(date.getDate()).padStart(2, '0'); // Día en formato de dos dígitos
+        const year = date.getFullYear(); // Año en formato de cuatro dígitos
+        return `${month}/${day}/${year}`;
+    };
+
     const [order, setOrder] = useState({
-        id: "",
         number: "",
         status: "Pending",
-        date: new Date(),
-        orderProducts: [
-        ],
-        total: 0
+        date: formatDate(new Date()), // Formatear la fecha al inicializar el estado
+        orderProducts: [],
+        total: 0,
+        active: true
     });
     //console cada que order sufre un cambio
     useEffect(() => {
