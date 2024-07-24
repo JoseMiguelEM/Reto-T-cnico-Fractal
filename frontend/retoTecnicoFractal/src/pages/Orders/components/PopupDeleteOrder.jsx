@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { FaTimes, FaTrash, FaCheck } from 'react-icons/fa';
 
-export default function PopupDeleteProduct({ product, onClose }) {
+export default function PopupDeleteOrder({ order, onClose }) {
     const [isDeleted, setIsDeleted] = useState(false);
 
     const handleDelete = () => {
-        // Lógica para eliminar el producto
+        // Lógica para eliminar la orden
         setIsDeleted(true);
     };
 
@@ -15,7 +15,7 @@ export default function PopupDeleteProduct({ product, onClose }) {
                 {!isDeleted ? (
                     <>
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-bold">Are you sure you want to delete the product #{product.id}?</h2>
+                            <h2 className="text-xl font-bold">Are you sure you want to delete order #{order.ID}?</h2>
                             <button onClick={onClose}>&times;</button>
                         </div>
                         <p className="mb-4">
@@ -39,7 +39,7 @@ export default function PopupDeleteProduct({ product, onClose }) {
                 ) : (
                     <>
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-bold">Product #{product.id} Deleted Successfully</h2>
+                            <h2 className="text-xl font-bold">Order #{order.ID} Deleted Successfully</h2>
                             <button onClick={onClose}>&times;</button>
                         </div>
                         <div className="flex justify-center">

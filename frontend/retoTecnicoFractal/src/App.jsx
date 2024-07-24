@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import NavBar from './components/NavBar/NavBar'
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import OrderPage from './pages/OrderPage'
+import OrderPage from './pages/Orders/OrderPage'
 import ProductsPage from './pages/Products/ProductsPage'
 
 function App() {

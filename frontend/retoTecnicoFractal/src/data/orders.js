@@ -1,4 +1,4 @@
-const orders = [
+export const orders = [
     {
       ID: 1, OrderNumber: 3736, Date: '2023-01-01', NumberOfProducts: 4, FinalPrice: 108.00, Status: 'Pending',
       products: [{ id: 20, name: 'Xiaomi Redmi 7', unitPrice: 27.00, quantity: 4, parcialPrice: 108.00 }]

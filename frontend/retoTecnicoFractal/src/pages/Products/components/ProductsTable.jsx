@@ -2,19 +2,7 @@ import React, { useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import PopupEditProduct from './PopupEditProduct';
 import PopupDeleteProduct from './PopupDeleteProduct';
-
-const tableStyles = {
-    table: "min-w-full border-separate",
-    thead: "bg-gray-100",
-    th: "px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider border-b-2 border-black",
-    tbody: "bg-gray-50",
-    tr: "bg-[#B6BFC9]/50 rounded-lg",
-    td: "px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center",
-    tdLeft: "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 text-center rounded-l-lg",
-    tdRight: "px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-center rounded-r-lg",
-    tdOptions: "flex justify-center space-x-4",
-    iconCell: "w-20", // Width fixed to 80px
-};
+import { tableStyles, productCols } from '../../utils'; // Importar los estilos y columnas
 
 export default function ProductsTable({ products }) {
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
@@ -34,12 +22,13 @@ export default function ProductsTable({ products }) {
     return (
         <div className="overflow-x-auto">
             <table className={tableStyles.table} style={{ borderSpacing: '0 10px' }}>
-                <thead className={tableStyles.thead}>
+                <thead>
                     <tr>
-                        <th scope="col" className={`${tableStyles.th} ${tableStyles.iconCell}`}>ID</th>
-                        <th scope="col" className={tableStyles.th}>Name</th>
-                        <th scope="col" className={tableStyles.th}>Unit Price</th>
-                        <th scope="col" className={`${tableStyles.th} ${tableStyles.iconCell}`}>Options</th>
+                        {productCols.map(col => (
+                            <th key={col.key} scope="col" className={`${tableStyles.th} ${col.className || ''}`}>
+                                {col.label}
+                            </th>
+                        ))}
                     </tr>
                 </thead>
                 <tbody className={tableStyles.tbody}>
