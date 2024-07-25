@@ -1,16 +1,26 @@
-import React from 'react';
+// OrdersPage.js
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OrdersTable from './components/OrdersTable';
 import { useOrders } from '../../hooks/useOrders.js';
 
 export default function OrdersPage() {
-    const { orders } = useOrders();
+    const { orders: initialOrders } = useOrders();
+    const [orders, setOrders] = useState(initialOrders); // Estado para las órdenes
+    const navigate = useNavigate();
     const cantidadOrders = orders.length;
-    const navigate = useNavigate(); // Hook para navegar
-    console.log(orders);
+
     const handleNewOrderClick = () => {
         navigate('/add-order');
     };
+
+    const handleDeleteOrder = (orderId) => {
+        setOrders(orders.filter(order => order.id !== orderId));
+    };
+
+    useEffect(() => {
+        setOrders(initialOrders);
+    }, [initialOrders]);
 
     return (
         <div className='px-8 py-4'>
@@ -21,12 +31,12 @@ export default function OrdersPage() {
                 </div>
                 <div
                     className="text-white text-xl text-center rounded-lg cursor-pointer bg-[#1585D7] px-4 py-2"
-                    onClick={handleNewOrderClick} // Añadir evento de click
+                    onClick={handleNewOrderClick}
                 >
                     + New Order
                 </div>
             </div>
-            <OrdersTable orders={orders} />
+            <OrdersTable orders={orders} onDeleteOrder={handleDeleteOrder} />
         </div>
     );
 }

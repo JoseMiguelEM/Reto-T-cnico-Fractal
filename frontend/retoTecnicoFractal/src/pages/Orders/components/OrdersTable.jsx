@@ -1,13 +1,14 @@
+// OrdersTable.js
 import React, { useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import PopupDeleteOrder from './PopupDeleteOrder'; // Asegúrate de que la ruta sea correcta
-import { tableStyles, getStatusClass, statusStyles, ordersCols } from '../../utils'; // Importar los estilos y columnas
-import { useNavigate } from 'react-router-dom'; // Importar useNavigate
+import PopupDeleteOrder from './PopupDeleteOrder';
+import { tableStyles, getStatusClass, statusStyles, ordersCols } from '../../utils';
+import { useNavigate } from 'react-router-dom';
 
-export default function OrdersTable({ orders }) {
+export default function OrdersTable({ orders, onDeleteOrder }) {
     const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const navigate = useNavigate(); // Hook para navegar
+    const navigate = useNavigate();
 
     const handleDeleteClick = (order) => {
         setSelectedOrder(order);
@@ -17,7 +18,11 @@ export default function OrdersTable({ orders }) {
     const handleClosePopup = () => {
         setIsDeletePopupOpen(false);
         setSelectedOrder(null);
-        location.reload();
+    };
+
+    const handleConfirmDelete = (orderId) => {
+        onDeleteOrder(orderId);
+        handleClosePopup();
     };
 
     const handleEditClick = (orderId) => {
@@ -71,6 +76,7 @@ export default function OrdersTable({ orders }) {
                 <PopupDeleteOrder
                     order={selectedOrder}
                     onClose={handleClosePopup}
+                    onConfirmDelete={handleConfirmDelete}
                 />
             )}
         </div>
