@@ -1,3 +1,4 @@
+// ProductsTable.js
 import React, { useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import PopupEditProduct from './PopupEditProduct';
@@ -63,9 +64,7 @@ export default function ProductsTable({ products, setProducts, setReload, reload
             {isEditPopupOpen && (
                 <PopupEditProduct
                     product={selectedProduct}
-                    onClose={() => setIsEditPopupOpen(false)
-                    
-                    }
+                    onClose={() => setIsEditPopupOpen(false)}
                     setReload={setReload}
                     reload={reload}
                 />

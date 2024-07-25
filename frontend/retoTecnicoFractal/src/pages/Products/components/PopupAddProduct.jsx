@@ -1,5 +1,6 @@
+// PopupAddProduct.js
 import React, { useState } from 'react';
-import { FaTimes, FaSave, FaCopy } from 'react-icons/fa';
+import { FaTimes, FaSave } from 'react-icons/fa';
 import { createProduct } from '../../../utils/productsFunctions';
 
 export default function PopupAddProduct({ onClose, products, setProducts }) {
@@ -9,7 +10,6 @@ export default function PopupAddProduct({ onClose, products, setProducts }) {
     const [productId, setProductId] = useState('');
 
     const handleSave = async () => {
-        // Lógica para guardar el producto
         const product = {
             name: name,
             unitPrice: parseFloat(unitPrice), // Convertir unitPrice a número
@@ -18,14 +18,10 @@ export default function PopupAddProduct({ onClose, products, setProducts }) {
         const resp = await createProduct(product);
         product.id = resp.id;
         setProductId(product.id); // Simular ID asignado
-        setProducts([...products, product]);
-        console.log('Product added:', products);
-        setIsAdded(true);
-    };
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(productId);
-        alert('Product ID copied to clipboard');
+        const newProducts = [...products, product].sort((a, b) => a.name.localeCompare(b.name));
+        setProducts(newProducts);
+        setIsAdded(true);
     };
 
     const isSaveDisabled = name.trim().length === 0 || unitPrice <= 0;
@@ -89,7 +85,7 @@ export default function PopupAddProduct({ onClose, products, setProducts }) {
                                 readOnly
                             />
                         </div>
-                        <div className="flex justify-center">
+                        <div className="flex justify-center mt-4">
                             <button
                                 onClick={onClose}
                                 className="bg-[#1585D7] text-white px-4 py-2 rounded flex items-center"
