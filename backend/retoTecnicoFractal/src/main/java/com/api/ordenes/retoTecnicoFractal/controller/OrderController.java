@@ -44,13 +44,7 @@ public class OrderController {
         Optional<Order> order = orderService.findById(id);
         System.out.println("orderDetails: " + order);
         if (order.isPresent()) {
-            // System.out.println("Se ingresó al if");
-            Order updatedOrder = order.get();
-            updatedOrder.setNumber(orderDetails.getNumber());
-            updatedOrder.setStatus(orderDetails.getStatus());
-            updatedOrder.setDate(orderDetails.getDate());
-            updatedOrder.setTotal(orderDetails.getTotal());
-            return ResponseEntity.ok(orderService.update(updatedOrder));
+            return ResponseEntity.ok(orderService.update(orderDetails));
         } else {
             return ResponseEntity.notFound().build();
         }

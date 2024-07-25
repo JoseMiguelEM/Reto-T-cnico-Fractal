@@ -31,6 +31,7 @@ export default function OrderResume({ order, setOrder, isEdit = false }) {
             }
         }else {
             console.log("Vamos a editar")
+            console.log("Order enviado a editar: ", order);
             const savedOrder = await updateOrder(order.id , order);
             if (savedOrder) {
                 setPopupSuccess(true);
