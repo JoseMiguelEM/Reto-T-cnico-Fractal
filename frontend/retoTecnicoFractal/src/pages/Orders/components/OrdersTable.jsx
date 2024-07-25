@@ -47,7 +47,7 @@ export default function OrdersTable({ orders, onDeleteOrder }) {
                             <td className={`${tableStyles.tdLeft} ${tableStyles.iconCell}`}>{order.id}</td>
                             <td className={tableStyles.td}>{order.number}</td>
                             <td className={tableStyles.td}>{order.date}</td>
-                            <td className={tableStyles.td}>{order.orderProducts.length}</td>
+                            <td className={tableStyles.td}>{order.orderProducts.reduce((acc, product) => acc + product.quantity, 0)}</td>
                             <td className={tableStyles.td}>{order.total}</td>
                             <td className={tableStyles.td}>
                                 <span className={`${getStatusClass(order.status)} ${statusStyles.base} ${statusStyles.rounded} ${statusStyles.sizeLimit}`}>
