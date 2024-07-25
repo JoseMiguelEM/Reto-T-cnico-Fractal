@@ -145,6 +145,7 @@ export default function OrderResume({ order, setOrder, isEdit = false }) {
             </form>
             {showAddProduct && (
                 <AddProduct
+                    actualProducts={order.orderProducts}
                     onAdd={handleAddProduct}
                     onClose={() => setShowAddProduct(false)}
                 />

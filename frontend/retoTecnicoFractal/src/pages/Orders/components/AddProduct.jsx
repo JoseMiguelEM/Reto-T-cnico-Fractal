@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FaTimes, FaSave, FaSearch } from 'react-icons/fa';
 import { useProducts } from '../../../hooks/useProducts';
 
-
-export default function AddProduct({ onAdd, onClose }) {
-    const {products}=useProducts();
+export default function AddProduct({ actualProducts, onAdd, onClose }) {
+    const { products } = useProducts();
     const productsAvailable = products;
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -17,11 +16,12 @@ export default function AddProduct({ onAdd, onClose }) {
         } else {
             setFilteredProducts(
                 productsAvailable.filter(product =>
-                    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+                    product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                    !actualProducts.some(actualProduct => actualProduct.id === product.id)
                 )
             );
         }
-    }, [searchTerm]);
+    }, [searchTerm, actualProducts, productsAvailable]);
 
     const handleAdd = () => {
         if (selectedProduct) {
