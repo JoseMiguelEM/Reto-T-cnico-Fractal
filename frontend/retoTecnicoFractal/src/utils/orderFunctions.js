@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const createOrder = async (order) => {
     try {
-        console.log("Aqui estan toda tu orden kchtmr: ", order)
+        console.log("Aqui estan toda tu orden: ", order)
         const response = await axios.post(`${import.meta.env.VITE_API_URL}orders`,order);
         console.log("response",response);
         return response.data;
